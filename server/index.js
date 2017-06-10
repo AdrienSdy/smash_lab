@@ -35,32 +35,34 @@ const rooms = {
 io.on('connection', (socket) => {
   if(rooms.lock || rooms.smash_lab.length > 1)socket.disconnect(true);
   else{
+    const index = 0 
+    socket.room = 'lab_' + index; 
     rooms.smash_lab.push(socket.id);
     console.log(rooms.smash_lab);
-    socket.join('smash_lab');
+    socket.join(socket.room);
     socket.emit('lab', socket.id);
 
     socket.on('start', () => {
-      socket.to('smash_lab').broadcast.emit('start', socket.id);
+      socket.to(socket.room).broadcast.emit('start', socket.id);
     });
 
     socket.on('match', () => {
       rooms.lock = true;
-      socket.to('smash_lab').broadcast.emit('match', socket.id);
+      socket.to(socket.room).broadcast.emit('match', socket.id);
     })
 
     socket.on('heroSelected', (hero_id) => {
-      socket.to('smash_lab').broadcast.emit('enemySelection', hero_id);
+      socket.to(socket.room).broadcast.emit('enemySelection', hero_id);
     });
 
     socket.on('attack', (enemy) => {
-      socket.to('smash_lab').broadcast.emit('attack', enemy);
+      socket.to(socket.room).broadcast.emit('attack', enemy);
     });
   }
   socket.on('disconnect', () => {
     rooms.smash_lab.splice(rooms.smash_lab.indexOf(socket.id), 1);
     rooms.lock = rooms.smash_lab.length;
-    socket.to('smash_lab').emit('friendDisconnect');
+    socket.to(socket.room).emit('friendDisconnect');
     console.log(rooms.lock);
     console.log(rooms.smash_lab);
     // do some stuff
