@@ -149,6 +149,12 @@ class SmashLab extends Component {
         }
       }); 
     }
+    if(this.state.player.life === 0 || this.state.enemy.life === 0){
+      const winner = (enemy)?'Vous avez':'Votre adversaire a';
+      this.setState({
+        winner: winner
+      });
+    }
   }
 
   attack(enemy){
@@ -158,7 +164,9 @@ class SmashLab extends Component {
 
   render() {
     let template = null;
-    if (this.state.player !== undefined && this.state.enemy !== undefined){
+    if (this.state.winner !== undefined){
+      template = "Jeu terminé. " + this.state.winner + " gagné";
+    }else if (this.state.player !== undefined && this.state.enemy !== undefined){
       template = 
         <div>
           <Header state={this.state} />
