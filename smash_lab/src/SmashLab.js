@@ -64,9 +64,8 @@ class SmashLab extends Component {
             rage: 0
           }
         });
-      }).catch(error => {
-        console.log(error);
-      });
+      })
+      .catch(error => console.log(error));
     });
 
     this.socket.on('attack', (player) => {
@@ -90,9 +89,8 @@ class SmashLab extends Component {
           rage: 0
         }
       });
-    }).catch(error => {
-      console.log(error);
-    });
+    })
+    .catch(error => console.log(error));
     
     this.socket.emit('setHero', hero_id);
   }
@@ -100,29 +98,20 @@ class SmashLab extends Component {
   getQuestion(){
     //this.getSmash();
     return fetch(server_link)
-    .then((response) => {
-      return response.json();
-    }).catch((error) => {
-      console.log(error);
-    });
+    .then(response => response.json())
+    .catch(error => console.log(error));
   }
 
   getHeroes(){
     return fetch(server_link + '/heroes')
-    .then((response) => {
-      return response.json();
-    }).catch((error) => {
-      console.log(error);
-    });
+    .then(response => response.json())
+    .catch(error => console.log(error));
   }
 
   getHero(hero_id){
     return fetch(server_link + '/heroes/' + hero_id)
-    .then((response) => {
-      return response.json();
-    }).catch((error) => {
-      console.log(error);
-    });
+    .then(response => response.json())
+    .catch(error => console.log(error));
   }
 
   getSmash(){

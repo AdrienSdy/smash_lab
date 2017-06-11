@@ -7,7 +7,8 @@ export default class Home extends Component {
         
         this.state = {
             heroes: []
-        }
+        };
+
         this.setHero = this.setHero.bind(this);
         this.getHeroes = this.getHeroes.bind(this);
 
@@ -20,14 +21,8 @@ export default class Home extends Component {
 
     getHeroes(){
         this.props.getHeroes()
-        .then((heroes) => {
-            this.setState({
-                heroes: heroes
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        .then(heroes => this.setState({heroes: heroes}))
+        .catch(error => console.log(error))
     }
 
     render() {

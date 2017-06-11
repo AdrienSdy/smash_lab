@@ -18,7 +18,8 @@ export default class Header extends Component {
                 <div>
                     <Player 
                         player='player'
-                        state={this.state}
+                        hero_id={this.state.player.hero_id}
+                        hero_name={this.state.player.name}
                     />   
                     <Status 
                         player='player'
@@ -35,7 +36,8 @@ export default class Header extends Component {
                     />
                     <Player
                         player='enemy'
-                        state={this.state}
+                        hero_id={this.state.enemy.hero_id}
+                        hero_name={this.state.enemy.name}
                     />    
                 </div>
             </header>
