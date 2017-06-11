@@ -4,15 +4,34 @@ export default class Home extends Component {
 
     constructor(props){
         super(props);
-        this.onSelectHero = this.onSelectHero.bind(this);
+        
+        this.state = {
+            heroes: []
+        }
+        this.setHero = this.setHero.bind(this);
+        this.getHeroes = this.getHeroes.bind(this);
+
+        this.getHeroes();
     }
 
-    onSelectHero(hero_id){
-        this.props.onSelectHero(hero_id);
+    setHero(hero_id){
+        this.props.setHero(hero_id);
+    }
+
+    getHeroes(){
+        this.props.getHeroes()
+        .then((heroes) => {
+            this.setState({
+                heroes: heroes
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     render() {
-        const heroes = this.props.heroes;
+        const heroes = this.state.heroes;
         return (
             <div>
                 <h3>Choisissez votre personnage :</h3>
@@ -20,7 +39,7 @@ export default class Home extends Component {
                     <img key={hero.id}
                         src={process.env.PUBLIC_URL + '/img/hero/' + hero.id + '.png'}
                         alt={hero.name} 
-                        onClick={() => {this.onSelectHero(hero.id)}}
+                        onClick={() => {this.setHero(hero.id)}}
                     />
                 )) }
             </div>

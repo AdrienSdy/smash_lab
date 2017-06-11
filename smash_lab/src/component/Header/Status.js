@@ -12,8 +12,8 @@ export default class Status extends Component {
 
     render() {
         const player = this.props.player
-        const hero_id = this.state[player].hero_id
-        let life = (this.state[player].life / this.state.heroes[hero_id].max_life * 100)
+        //const hero_id = this.state[player].hero_id
+        let life = (this.state[player].life / this.state[player].max_life * 100)
         life = {width: life + '%'}
      //   const rage = {width: (this.state[player].rage / this.state.heroes[hero_id].max_rage ) + '%'}
         const rage = {width: '0%'}

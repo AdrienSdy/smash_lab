@@ -9,7 +9,7 @@ const io = socketIo(server);
 
 
 const getQuestion = require('./question/QuestionController.js');
-const Api = require('./api.js');
+const Heroes = require('./routes/heroes')
 require('dotenv').config()
 
 
@@ -18,8 +18,7 @@ server.listen(3100, function () {
 });
 
 app.get(['/','/question','/question/:category'], getQuestion);
-
-app.use('/api', Api);
+app.use('/heroes', Heroes);
 
 function matching(socket){
   if(!rooms.length){
@@ -77,7 +76,7 @@ io.on('connection', (socket) => {
     socket.to(socket.room).broadcast.emit('match', socket.id);
   })
 
-  socket.on('heroSelected', (hero_id) => {
+  socket.on('setHero', (hero_id) => {
     socket.to(socket.room).broadcast.emit('enemySelection', hero_id);
   });
 

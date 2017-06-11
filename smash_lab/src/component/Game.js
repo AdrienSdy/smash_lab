@@ -26,7 +26,6 @@ export default class Game extends Component {
                 'time': Date.now() 
             });
         });
-        console.log('question');
     }
 
     sendAnswer(index){
