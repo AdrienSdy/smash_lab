@@ -38,15 +38,13 @@ class SmashLab extends Component {
       this.setState({
         player_id: player_id
       });
-      console.log('my id : ' + player_id);
       this.socket.emit('start');
     });
 
     this.socket.on('start', (enemy_id) => {
       this.setState({
         enemy_id: enemy_id
-      });
-      console.log('1er enemy id : ' + enemy_id); 
+      }); 
       this.socket.emit('match');
     });
 
@@ -54,24 +52,23 @@ class SmashLab extends Component {
       this.setState({
         enemy_id: enemy_id
       });
-      console.log('2e enemy id : ' + enemy_id); 
     });
 
     this.socket.on('enemySelection', (enemy_hero_id) => {
-      this.setState({enemy: {hero_id: enemy_hero_id, life: this.state.heroes[enemy_hero_id].max_life}});
+      this.setState({
+        enemy: {
+          hero_id: enemy_hero_id, 
+          life: this.state.heroes[enemy_hero_id].max_life
+        }
+      });
     });
 
     this.socket.on('attack', (player) => {
       this.life(!player);
     });
 
-    this.socket.on('message', (message) => {
-      console.log(message);
-    });
-
     this.socket.on('friendDisconnect', () => {
-      console.log('adversaire déconnecté');
-      this.socket.emit('disconnect');
+      window.location.href = window.location;
     });
   }
 
@@ -145,13 +142,15 @@ class SmashLab extends Component {
           <Game attack={this.attack} getQuestion={this.getQuestion}/>
         </div>;
     } else if (this.state.player !== undefined){
-      template = "En attente de l'autre joueur";
+      template = "En attente de la sélection de votre adversaire";
     } else if (this.state.player_id !== undefined && this.state.enemy_id !== undefined) {
       template =
         <Home 
           heroes={this.state.heroes}
           onSelectHero={this.heroSelected}
         />;
+    } else if (this.state.player_id !== undefined){
+      template = "Salut, tu es en attente d'un autre joueur";
     } else {
       template = "Salut, tu n'as pas matché dsl. Reload";
     }
